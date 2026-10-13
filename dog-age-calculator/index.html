@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dog Age Calculator — Convert Dog Years to Human Years</title>
+<meta name="description" content="Free dog age calculator using the UCSD logarithmic formula. Convert your dog's age to human years, adjusted for size, and find their life stage.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the 'multiply by 7' rule for dog years accurate?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. A 2019 UCSD study of Labrador Retrievers found the relationship between dog and human aging is logarithmic, not linear. A 1-year-old dog is roughly 31 in human years, and aging slows from there. The formula is: human years = 16 x ln(dog years) + 31." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does dog size affect aging?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Small dogs generally live longer and age more slowly than large dogs. Our calculator adjusts the UCSD formula by size class: small x0.92, medium x1.0, large x1.06, giant x1.12." }
+    },
+    {
+      "@type": "Question",
+      "name": "At what age is a dog considered a senior?",
+      "acceptedAnswer": { "@type": "Answer", "text": "It depends on size: giant breeds around 6 years, large breeds around 7-8, medium breeds around 9, and small breeds around 10. Larger dogs become seniors earlier because they age faster." }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../" aria-label="PawBudget home">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 13.2c-2.6 0-5.5 2.1-5.5 4.4 0 1.4 1 2.4 2.5 2.4 1 0 1.9-.5 3-.5s2 .5 3 .5c1.5 0 2.5-1 2.5-2.4 0-2.3-2.9-4.4-5.5-4.4zM6.2 8.2c-1-.3-2.2.9-2.6 2.5-.4 1.7.1 3.2 1.1 3.5 1 .3 2.2-.9 2.6-2.5.4-1.7-.1-3.2-1.1-3.5zm11.6 0c-1 .3-1.5 1.8-1.1 3.5.4 1.6 1.6 2.8 2.6 2.5 1-.3 1.5-1.8 1.1-3.5-.4-1.6-1.6-2.8-2.6-2.5zM9.4 3.1c-1.1.2-1.7 1.9-1.4 3.7.3 1.8 1.4 3.1 2.5 2.9 1.1-.2 1.7-1.9 1.4-3.7-.3-1.8-1.4-3.1-2.5-2.9zm5.2 0c-1.1-.2-2.2 1.1-2.5 2.9-.3 1.8.3 3.5 1.4 3.7 1.1.2 2.2-1.1 2.5-2.9.3-1.8-.3-3.5-1.4-3.7z"/></svg>
+      PawBudget
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="../">Home</a>
+      <a href="../dog-cost-calculator/">Cost Calculator</a>
+      <a href="./" class="active">Age Calculator</a>
+      <a href="../senior-dog-care/">Senior Dog Care</a>
+      <a href="../best-senior-dog-food/">Senior Dog Food</a>
+      <a href="../about/">About</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="section" style="padding-top:34px;">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Home</a> &rsaquo; Dog Age Calculator</nav>
+      <h1>Dog Age Calculator</h1>
+      <p class="page-intro">Forget "multiply by 7." Enter your dog's age and size class to get a research-backed human-equivalent age — plus their life stage.</p>
+
+      <div class="calc-layout">
+        <div class="card">
+          <h2 style="margin-top:0; font-size:1.3rem;">Your dog</h2>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+            <div class="field">
+              <label for="years">Years</label>
+              <input type="number" id="years" min="0" max="25" step="1" value="5">
+            </div>
+            <div class="field">
+              <label for="months">Months</label>
+              <input type="number" id="months" min="0" max="11" step="1" value="0">
+            </div>
+          </div>
+          <div class="field">
+            <label for="size">Size class</label>
+            <select id="size">
+              <option value="small">Small (under ~25 lbs)</option>
+              <option value="medium" selected>Medium (~25–60 lbs)</option>
+              <option value="large">Large (~60–100 lbs)</option>
+              <option value="giant">Giant (100+ lbs)</option>
+            </select>
+            <p class="hint">Size adjusts the formula: small dogs age slightly slower, giant dogs faster.</p>
+          </div>
+          <div class="disclaimer-box">Based on the UCSD epigenetic-aging formula (see <a href="../methodology/">methodology</a>). An approximation — individual dogs vary.</div>
+        </div>
+
+        <div class="card results-panel" aria-live="polite">
+          <div class="age-result">
+            <div class="small" style="text-transform:uppercase; letter-spacing:.08em; font-weight:600;">Human-equivalent age</div>
+            <div class="big-number"><span id="human-age">–</span></div>
+            <div style="font-size:1.1rem; color:var(--muted);">human years</div>
+            <div><span class="stage-badge" id="stage-badge">–</span></div>
+          </div>
+          <div id="stage-note"></div>
+        </div>
+      </div>
+
+      <h2>Why "multiply by 7" is wrong</h2>
+      <p>Dogs mature extremely fast in their first two years — a 1-year-old dog is roughly equivalent to a 31-year-old human, not a 7-year-old. After that, aging slows down. In 2019, researchers at UC San Diego (Wang et al., <em>Cell Systems</em>) quantified this by comparing DNA-methylation "epigenetic clocks" in Labrador Retrievers and humans, producing the formula:</p>
+      <div class="callout teal" style="font-size:1.05rem;"><strong>human years ≈ 16 × ln(dog years) + 31</strong></div>
+      <p>The study used Labradors, so we adjust for size class: small ×0.92, medium ×1.0, large ×1.06, giant ×1.12. This is still an approximation — breed, weight, and health history all shift the curve — but it's far closer to biology than the old rule of thumb.</p>
+
+      <h2>What the life stage means</h2>
+      <div class="grid-3">
+        <div class="card">
+          <span class="stage-badge stage-puppy">Puppy</span>
+          <p style="margin-top:12px;">Under 2 years. Rapid growth, training-heavy, highest first-year costs (vaccines, spay/neuter, setup). This is also when the <a href="../dog-cost-calculator/">cost calculator's</a> 1.35× first-year multiplier bites.</p>
+        </div>
+        <div class="card">
+          <span class="stage-badge stage-adult">Adult</span>
+          <p style="margin-top:12px;">The steady years. Routine vet care, stable food costs, and the best window to build the emergency fund you'll want later.</p>
+        </div>
+        <div class="card">
+          <span class="stage-badge stage-senior">Senior</span>
+          <p style="margin-top:12px;">Giant breeds from ~6, large ~7–8, medium ~9, small ~10. Expect twice-yearly vet visits, senior bloodwork, and rising healthcare spending — see our <a href="../senior-dog-care/">senior care guides</a>.</p>
+        </div>
+      </div>
+
+      <h2>Frequently asked questions</h2>
+      <details class="faq">
+        <summary>Is the "multiply by 7" rule for dog years accurate?</summary>
+        <div class="faq-body"><p>No. A 2019 UCSD study found the relationship is logarithmic: a 1-year-old dog is about 31 in human years, a 5-year-old large dog about 60, and a 10-year-old about 68. The old rule underestimates young dogs and overestimates old ones.</p></div>
+      </details>
+      <details class="faq">
+        <summary>Does dog size affect aging?</summary>
+        <div class="faq-body"><p>Yes. Small dogs generally live longer and age more slowly than large dogs, which is why giant breeds become seniors around age 6 while small breeds may not until 10. Our calculator applies size adjustments to the base formula.</p></div>
+      </details>
+      <details class="faq">
+        <summary>At what age is a dog considered a senior?</summary>
+        <div class="faq-body"><p>It depends on size: giant breeds around 6, large breeds around 7–8, medium breeds around 9, small breeds around 10. Read our full guide: <a href="../when-is-my-dog-considered-senior/">when is my dog considered a senior?</a></p></div>
+      </details>
+
+      <div class="cta-band">
+        <h2>Now price out the years ahead</h2>
+        <p>Senior years cost more — mostly at the vet. Run your breed through the cost calculator to see the full lifetime picture.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="../dog-cost-calculator/">Dog cost calculator</a>
+          <a class="btn btn-outline-light" href="../senior-dog-care/">Senior dog care guides</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 13.2c-2.6 0-5.5 2.1-5.5 4.4 0 1.4 1 2.4 2.5 2.4 1 0 1.9-.5 3-.5s2 .5 3 .5c1.5 0 2.5-1 2.5-2.4 0-2.3-2.9-4.4-5.5-4.4zM6.2 8.2c-1-.3-2.2.9-2.6 2.5-.4 1.7.1 3.2 1.1 3.5 1 .3 2.2-.9 2.6-2.5.4-1.7-.1-3.2-1.1-3.5zm11.6 0c-1 .3-1.5 1.8-1.1 3.5.4 1.6 1.6 2.8 2.6 2.5 1-.3 1.5-1.8 1.1-3.5-.4-1.6-1.6-2.8-2.6-2.5zM9.4 3.1c-1.1.2-1.7 1.9-1.4 3.7.3 1.8 1.4 3.1 2.5 2.9 1.1-.2 1.7-1.9 1.4-3.7-.3-1.8-1.4-3.1-2.5-2.9zm5.2 0c-1.1-.2-2.2 1.1-2.5 2.9-.3 1.8.3 3.5 1.4 3.7 1.1.2 2.2-1.1 2.5-2.9.3-1.8-.3-3.5-1.4-3.7z"/></svg>
+          PawBudget
+        </div>
+        <p>Honest cost estimates and senior-care guides for dog owners. Estimates only — not financial or veterinary advice.</p>
+      </div>
+      <div>
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="../dog-cost-calculator/">Dog Cost Calculator</a></li>
+          <li><a href="./">Dog Age Calculator</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Guides</h4>
+        <ul>
+          <li><a href="../senior-dog-care/">Senior Dog Care</a></li>
+          <li><a href="../senior-dog-care/arthritis/">Arthritis in Dogs</a></li>
+          <li><a href="../best-senior-dog-food/">Best Senior Dog Food</a></li>
+          <li><a href="../when-is-my-dog-considered-senior/">When Is My Dog a Senior?</a></li>
+          <li><a href="../dog-cost/labrador-retriever/">Labrador Retriever Costs</a></li>
+          <li><a href="../dog-cost/golden-retriever/">Golden Retriever Costs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../about/">About</a></li>
+          <li><a href="../methodology/">Methodology</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 PawBudget. All rights reserved.</span>
+      <span>Some links are affiliate links; we may earn a commission at no cost to you.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/breeds.js"></script>
+<script src="../assets/js/calculators.js"></script>
+<script>
+(function () {
+  var yearsInput = document.getElementById("years");
+  var monthsInput = document.getElementById("months");
+  var sizeSel = document.getElementById("size");
+  var humanAgeEl = document.getElementById("human-age");
+  var badgeEl = document.getElementById("stage-badge");
+  var noteEl = document.getElementById("stage-note");
+
+  function render() {
+    var years = parseFloat(yearsInput.value);
+    var months = parseFloat(monthsInput.value);
+    if (isNaN(years) || years < 0) years = 0;
+    if (isNaN(months) || months < 0) months = 0;
+    if (months > 11) months = 11;
+    var totalYears = years + months / 12;
+
+    var human = humanAgeEquivalent(totalYears, sizeSel.value);
+    var stage = lifeStage(totalYears, sizeSel.value);
+    var threshold = seniorThresholdFor(sizeSel.value);
+
+    humanAgeEl.textContent = human;
+    badgeEl.textContent = stage;
+    badgeEl.className = "stage-badge stage-" + stage.toLowerCase();
+
+    var note = "";
+    if (stage === "Puppy") {
+      note = '<div class="callout teal">Still a puppy — the expensive first-year phase. <a href="../dog-cost-calculator/">Estimate the full cost</a> before the chewed shoes pile up.</div>';
+    } else if (stage === "Senior") {
+      note = '<div class="callout">Your dog has reached senior status (threshold for this size: ' + threshold + ' years). Time for twice-yearly vet visits and senior nutrition — see our <a href="../senior-dog-care/">senior dog care guides</a>.</div>';
+    } else {
+      note = '<div class="callout teal">Adult years — the steadiest (and cheapest) phase. Senior status for this size class begins around ' + threshold + ' years.</div>';
+    }
+    noteEl.innerHTML = note;
+  }
+
+  [yearsInput, monthsInput, sizeSel].forEach(function (el) {
+    el.addEventListener("input", render);
+    el.addEventListener("change", render);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dog Cost Calculator — First-Year, Annual &amp; Lifetime</title>
+<meta name="description" content="Free dog cost calculator: estimate first-year, annual, and lifetime costs by breed, size, age, region, and care level. Instant results, no sign-up.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much does a dog cost in the first year?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The first year typically costs about 35% more than a regular year because of adoption or breeder fees, setup supplies, spay/neuter surgery, vaccinations, and training. For a large breed on a Standard care plan, expect roughly $3,920 in year one." }
+    },
+    {
+      "@type": "Question",
+      "name": "What does it cost to own a dog per year after the first?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Annual costs depend mostly on size: roughly $1,600 (small), $2,200 (medium), $2,900 (large), or $3,600 (giant) on a Standard care plan, adjusted for your region. Healthcare is the largest category at about 30%." }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does a dog cost over its whole lifetime?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Lifetime cost is first-year cost plus annual costs for each remaining year of the breed's expected lifespan. A Labrador Retriever, for example, comes to roughly $32,920 over an 11-year life on a Standard plan." }
+    },
+    {
+      "@type": "Question",
+      "name": "Do senior dogs cost more?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Once a dog reaches its breed's senior age, healthcare spending runs about 50% higher due to more frequent vet visits, bloodwork, dental care, and medications. Our calculator applies this automatically when you enter a senior dog's age." }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../" aria-label="PawBudget home">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 13.2c-2.6 0-5.5 2.1-5.5 4.4 0 1.4 1 2.4 2.5 2.4 1 0 1.9-.5 3-.5s2 .5 3 .5c1.5 0 2.5-1 2.5-2.4 0-2.3-2.9-4.4-5.5-4.4zM6.2 8.2c-1-.3-2.2.9-2.6 2.5-.4 1.7.1 3.2 1.1 3.5 1 .3 2.2-.9 2.6-2.5.4-1.7-.1-3.2-1.1-3.5zm11.6 0c-1 .3-1.5 1.8-1.1 3.5.4 1.6 1.6 2.8 2.6 2.5 1-.3 1.5-1.8 1.1-3.5-.4-1.6-1.6-2.8-2.6-2.5zM9.4 3.1c-1.1.2-1.7 1.9-1.4 3.7.3 1.8 1.4 3.1 2.5 2.9 1.1-.2 1.7-1.9 1.4-3.7-.3-1.8-1.4-3.1-2.5-2.9zm5.2 0c-1.1-.2-2.2 1.1-2.5 2.9-.3 1.8.3 3.5 1.4 3.7 1.1.2 2.2-1.1 2.5-2.9.3-1.8-.3-3.5-1.4-3.7z"/></svg>
+      PawBudget
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="../">Home</a>
+      <a href="./" class="active">Cost Calculator</a>
+      <a href="../dog-age-calculator/">Age Calculator</a>
+      <a href="../senior-dog-care/">Senior Dog Care</a>
+      <a href="../best-senior-dog-food/">Senior Dog Food</a>
+      <a href="../about/">About</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="section" style="padding-top:34px;">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Home</a> &rsaquo; Dog Cost Calculator</nav>
+      <h1>Dog Cost Calculator</h1>
+      <p class="page-intro">Pick a breed, describe your situation, and get instant first-year, annual, and lifetime cost estimates — broken down by spending category. No sign-up, no email, just numbers.</p>
+
+      <div class="calc-layout">
+        <div class="card">
+          <h2 style="margin-top:0; font-size:1.3rem;">Your dog &amp; situation</h2>
+          <div class="field">
+            <label for="breed">Breed</label>
+            <select id="breed"></select>
+          </div>
+          <div class="field">
+            <label for="size">Size class</label>
+            <select id="size">
+              <option value="small">Small (under ~25 lbs)</option>
+              <option value="medium">Medium (~25–60 lbs)</option>
+              <option value="large">Large (~60–100 lbs)</option>
+              <option value="giant">Giant (100+ lbs)</option>
+            </select>
+            <p class="hint">Auto-filled from the breed — change it if your dog is an exception.</p>
+          </div>
+          <div class="field">
+            <label for="age">Dog's age (years)</label>
+            <input type="number" id="age" min="0" max="25" step="0.5" value="1">
+            <p class="hint">Use 0.5 for a 6-month-old puppy. Senior pricing applies automatically at the breed's senior age.</p>
+          </div>
+          <div class="field">
+            <label for="region">US region</label>
+            <select id="region">
+              <option value="northeast">Northeast</option>
+              <option value="midwest">Midwest</option>
+              <option value="south" selected>South</option>
+              <option value="west">West</option>
+              <option value="rural">Rural / low-cost area</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Care level</label>
+            <div class="radio-pills" role="radiogroup" aria-label="Care level">
+              <label><input type="radio" name="care" value="essential">Essential<span class="sub">budget basics</span></label>
+              <label><input type="radio" name="care" value="standard" checked>Standard<span class="sub">typical owner</span></label>
+              <label><input type="radio" name="care" value="premium">Premium<span class="sub">top-tier everything</span></label>
+            </div>
+          </div>
+          <div class="disclaimer-box">Estimates based on our published <a href="../methodology/">methodology</a>. Individual costs vary — treat this as a planning guide, not a quote.</div>
+        </div>
+
+        <div class="card results-panel" aria-live="polite">
+          <h2 style="margin-top:0; font-size:1.3rem;">Your estimate <span class="small" id="result-breed"></span></h2>
+          <div class="kpi-row">
+            <div class="kpi"><div class="kpi-label">First year</div><div class="kpi-value" id="kpi-first">$–</div></div>
+            <div class="kpi"><div class="kpi-label">Per year</div><div class="kpi-value" id="kpi-annual">$–</div></div>
+            <div class="kpi highlight"><div class="kpi-label">Lifetime</div><div class="kpi-value" id="kpi-lifetime">$–</div></div>
+          </div>
+
+          <h3 style="margin-top:0;">Where the money goes <span class="small">(annual)</span></h3>
+          <div class="breakdown" id="breakdown"></div>
+
+          <div id="senior-note"></div>
+
+          <div class="callout teal" id="emergency-note"></div>
+
+          <h3>Protect the budget</h3>
+          <p>A single emergency surgery can cost $3,000–$7,000 — more than two years of routine care. Two ways owners handle that risk:</p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:8px;">
+            <!-- TODO: replace with affiliate link after program approval -->
+            <a class="btn btn-teal" href="https://www.embracepetinsurance.com/" rel="nofollow sponsored" target="_blank">Compare pet insurance</a>
+            <!-- TODO: replace with affiliate link after program approval -->
+            <a class="btn btn-outline-teal" href="https://www.chewy.com/" rel="nofollow sponsored" target="_blank">Shop food &amp; supplies</a>
+          </div>
+          <p class="small">Links open the merchant's homepage. We'll add direct quote links once our affiliate partnerships are approved.</p>
+        </div>
+      </div>
+
+      <h2>How the estimate works</h2>
+      <p>We start from a base annual cost for the dog's size class ($1,600–$3,600), split it across six categories — food &amp; treats (28%), healthcare (30%), grooming (10%), training &amp; services (14%), supplies (8%), and miscellaneous (10%) — then adjust for your region, care level, and the dog's age. The first year gets a 1.35× multiplier for adoption or purchase fees, setup, spay/neuter, and training. Once a dog passes its breed's senior age, the healthcare slice grows 50%. Lifetime cost assumes the breed's average lifespan. Full details in our <a href="../methodology/">methodology</a>.</p>
+
+      <h2>Frequently asked questions</h2>
+      <details class="faq">
+        <summary>How much does a dog cost in the first year?</summary>
+        <div class="faq-body"><p>The first year typically costs about 35% more than a regular year because of adoption or breeder fees, setup supplies, spay/neuter surgery, vaccinations, and training. For a large breed on a Standard care plan, expect roughly $3,920 in year one.</p></div>
+      </details>
+      <details class="faq">
+        <summary>What does it cost to own a dog per year after the first?</summary>
+        <div class="faq-body"><p>Annual costs depend mostly on size: roughly $1,600 (small), $2,200 (medium), $2,900 (large), or $3,600 (giant) on a Standard care plan, adjusted for your region. Healthcare is the largest category at about 30%.</p></div>
+      </details>
+      <details class="faq">
+        <summary>How much does a dog cost over its whole lifetime?</summary>
+        <div class="faq-body"><p>Lifetime cost is first-year cost plus annual costs for each remaining year of the breed's expected lifespan. A Labrador Retriever, for example, comes to roughly $32,920 over an 11-year life on a Standard plan.</p></div>
+      </details>
+      <details class="faq">
+        <summary>Do senior dogs cost more?</summary>
+        <div class="faq-body"><p>Yes. Once a dog reaches its breed's senior age, healthcare spending runs about 50% higher due to more frequent vet visits, bloodwork, dental care, and medications. This calculator applies the senior adjustment automatically when you enter a senior dog's age — or read our <a href="../senior-dog-care/">senior dog care guides</a> to see why.</p></div>
+      </details>
+
+      <div class="cta-band">
+        <h2>Wondering how old your dog really is?</h2>
+        <p>Pair this estimate with our research-backed age calculator — and check whether your dog has hit senior status yet.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="../dog-age-calculator/">Dog age calculator</a>
+          <a class="btn btn-outline-light" href="../senior-dog-care/">Senior dog care guides</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 13.2c-2.6 0-5.5 2.1-5.5 4.4 0 1.4 1 2.4 2.5 2.4 1 0 1.9-.5 3-.5s2 .5 3 .5c1.5 0 2.5-1 2.5-2.4 0-2.3-2.9-4.4-5.5-4.4zM6.2 8.2c-1-.3-2.2.9-2.6 2.5-.4 1.7.1 3.2 1.1 3.5 1 .3 2.2-.9 2.6-2.5.4-1.7-.1-3.2-1.1-3.5zm11.6 0c-1 .3-1.5 1.8-1.1 3.5.4 1.6 1.6 2.8 2.6 2.5 1-.3 1.5-1.8 1.1-3.5-.4-1.6-1.6-2.8-2.6-2.5zM9.4 3.1c-1.1.2-1.7 1.9-1.4 3.7.3 1.8 1.4 3.1 2.5 2.9 1.1-.2 1.7-1.9 1.4-3.7-.3-1.8-1.4-3.1-2.5-2.9zm5.2 0c-1.1-.2-2.2 1.1-2.5 2.9-.3 1.8.3 3.5 1.4 3.7 1.1.2 2.2-1.1 2.5-2.9.3-1.8-.3-3.5-1.4-3.7z"/></svg>
+          PawBudget
+        </div>
+        <p>Honest cost estimates and senior-care guides for dog owners. Estimates only — not financial or veterinary advice.</p>
+      </div>
+      <div>
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="./">Dog Cost Calculator</a></li>
+          <li><a href="../dog-age-calculator/">Dog Age Calculator</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Guides</h4>
+        <ul>
+          <li><a href="../senior-dog-care/">Senior Dog Care</a></li>
+          <li><a href="../senior-dog-care/arthritis/">Arthritis in Dogs</a></li>
+          <li><a href="../best-senior-dog-food/">Best Senior Dog Food</a></li>
+          <li><a href="../when-is-my-dog-considered-senior/">When Is My Dog a Senior?</a></li>
+          <li><a href="../dog-cost/labrador-retriever/">Labrador Retriever Costs</a></li>
+          <li><a href="../dog-cost/golden-retriever/">Golden Retriever Costs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../about/">About</a></li>
+          <li><a href="../methodology/">Methodology</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 PawBudget. All rights reserved.</span>
+      <span>Some links are affiliate links; we may earn a commission at no cost to you.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/breeds.js"></script>
+<script src="../assets/js/calculators.js"></script>
+<script>
+(function () {
+  var breedSel = document.getElementById("breed");
+  var sizeSel = document.getElementById("size");
+  var ageInput = document.getElementById("age");
+  var regionSel = document.getElementById("region");
+
+  // Populate breed dropdown (alphabetical)
+  var keys = Object.keys(BREED_DATA).sort(function (a, b) {
+    return BREED_DATA[a].name.localeCompare(BREED_DATA[b].name);
+  });
+  keys.forEach(function (key) {
+    var opt = document.createElement("option");
+    opt.value = key;
+    opt.textContent = BREED_DATA[key].name;
+    breedSel.appendChild(opt);
+  });
+  breedSel.value = "labrador-retriever";
+
+  function currentCare() {
+    var checked = document.querySelector('input[name="care"]:checked');
+    return checked ? checked.value : "standard";
+  }
+
+  function syncSizeFromBreed() {
+    var breed = BREED_DATA[breedSel.value];
+    if (breed) sizeSel.value = breed.sizeClass;
+  }
+  breedSel.addEventListener("change", function () { syncSizeFromBreed(); render(); });
+  syncSizeFromBreed();
+
+  function render() {
+    var breedKey = breedSel.value;
+    var breed = BREED_DATA[breedKey];
+    var age = parseFloat(ageInput.value);
+    if (isNaN(age) || age < 0) age = 0;
+
+    var result;
+    try {
+      result = computeCost({
+        breedKey: breedKey,
+        sizeClass: sizeSel.value,
+        ageYears: age,
+        region: regionSel.value,
+        careLevel: currentCare()
+      });
+    } catch (e) { return; }
+
+    document.getElementById("result-breed").textContent = "— " + result.breedName;
+    document.getElementById("kpi-first").textContent = formatMoney(result.firstYear);
+    document.getElementById("kpi-annual").textContent = formatMoney(result.annual);
+    document.getElementById("kpi-lifetime").textContent = formatMoney(result.lifetime);
+
+    // Category bars
+    var maxCat = 0;
+    Object.keys(result.categories).forEach(function (k) {
+      if (result.categories[k] > maxCat) maxCat = result.categories[k];
+    });
+    var html = "";
+    Object.keys(CATEGORY_LABELS).forEach(function (k) {
+      var val = result.categories[k];
+      var pct = maxCat > 0 ? Math.round((val / maxCat) * 100) : 0;
+      html += '<div class="breakdown-row">' +
+        '<div class="row-head"><span>' + CATEGORY_LABELS[k] + '</span><strong>' + formatMoney(val) + '</strong></div>' +
+        '<div class="bar-track"><div class="bar-fill" style="width:' + pct + '%"></div></div></div>';
+    });
+    document.getElementById("breakdown").innerHTML = html;
+
+    // Senior note
+    var seniorNote = document.getElementById("senior-note");
+    if (result.isSenior) {
+      seniorNote.innerHTML = '<div class="callout"><strong>Senior pricing applied.</strong> At ' +
+        age + ' years, your ' + result.breedName + ' is past the breed senior age of ' + breed.seniorAge +
+        ', so healthcare spending is estimated 50% higher. See our <a href="../senior-dog-care/">senior care guides</a>.</div>';
+    } else {
+      seniorNote.innerHTML = "";
+    }
+
+    // Emergency fund
+    document.getElementById("emergency-note").innerHTML =
+      "<strong>Emergency fund target: " + formatMoney(result.emergencyFund) + ".</strong> " +
+      "Keep this in a separate savings account before you need it — one cruciate-ligament surgery can wipe out two years of routine-care budget.";
+
+    // Acquisition context
+    var acq = breed.acquisitionCost;
+    var acqNote = document.getElementById("acquisition-note");
+    if (acqNote) {
+      acqNote.innerHTML = "Typical acquisition for this breed: <strong>" + formatMoney(acq[0]) + "–" + formatMoney(acq[1]) +
+        "</strong> (shelter adoption to reputable breeder).";
+    }
+  }
+
+  // Acquisition note placeholder inside results
+  var acqDiv = document.createElement("p");
+  acqDiv.className = "small";
+  acqDiv.id = "acquisition-note";
+  document.querySelector(".results-panel").appendChild(acqDiv);
+
+  [sizeSel, ageInput, regionSel].forEach(function (el) {
+    el.addEventListener("input", render);
+    el.addEventListener("change", render);
+  });
+  document.querySelectorAll('input[name="care"]').forEach(function (el) {
+    el.addEventListener("change", render);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

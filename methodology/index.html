@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Methodology — How PawBudget Estimates Dog Costs</title>
+<meta name="description" content="How our dog cost calculator works: data sources, category splits, regional multipliers, the UCSD age formula, and the limits of our estimates.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../" aria-label="PawBudget home">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 13.2c-2.6 0-5.5 2.1-5.5 4.4 0 1.4 1 2.4 2.5 2.4 1 0 1.9-.5 3-.5s2 .5 3 .5c1.5 0 2.5-1 2.5-2.4 0-2.3-2.9-4.4-5.5-4.4zM6.2 8.2c-1-.3-2.2.9-2.6 2.5-.4 1.7.1 3.2 1.1 3.5 1 .3 2.2-.9 2.6-2.5.4-1.7-.1-3.2-1.1-3.5zm11.6 0c-1 .3-1.5 1.8-1.1 3.5.4 1.6 1.6 2.8 2.6 2.5 1-.3 1.5-1.8 1.1-3.5-.4-1.6-1.6-2.8-2.6-2.5zM9.4 3.1c-1.1.2-1.7 1.9-1.4 3.7.3 1.8 1.4 3.1 2.5 2.9 1.1-.2 1.7-1.9 1.4-3.7-.3-1.8-1.4-3.1-2.5-2.9zm5.2 0c-1.1-.2-2.2 1.1-2.5 2.9-.3 1.8.3 3.5 1.4 3.7 1.1.2 2.2-1.1 2.5-2.9.3-1.8-.3-3.5-1.4-3.7z"/></svg>
+      PawBudget
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="../">Home</a>
+      <a href="../dog-cost-calculator/">Cost Calculator</a>
+      <a href="../dog-age-calculator/">Age Calculator</a>
+      <a href="../senior-dog-care/">Senior Dog Care</a>
+      <a href="../best-senior-dog-food/">Senior Dog Food</a>
+      <a href="../about/">About</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="section" style="padding-top:34px;">
+    <div class="container narrow">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Home</a> &rsaquo; Methodology</nav>
+      <h1>Methodology</h1>
+      <p class="page-intro">Every number on PawBudget comes from somewhere. This page documents the cost model's inputs, the age formula, and — just as important — what the estimates can't do.</p>
+
+      <h2>The cost model</h2>
+      <h3>Base annual costs by size</h3>
+      <p>We anchor the model to size-class base costs for a Standard care plan: <strong>small $1,600 · medium $2,200 · large $2,900 · giant $3,600</strong> per year. These sit inside the ranges published by industry surveys — the ASPCA's pet-care cost estimates, for example, place typical annual dog costs roughly in the $1,000–$4,500 range depending on size and circumstances — and reflect the reality that nearly every line item (food volume, medication dosing, surgery fees) scales with the dog's weight.</p>
+      <h3>Category split</h3>
+      <p>Each base is divided into six categories: <strong>food &amp; treats 28%, healthcare &amp; vet 30%, grooming 10%, training &amp; services 14%, supplies 8%, miscellaneous 10%</strong>. Healthcare leads because routine vet care, preventatives, and dental work dominate most owners' budgets; it also grows fastest with age (see below).</p>
+      <h3>Multipliers</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Factor</th><th>Values</th><th>Rationale</th></tr></thead>
+          <tbody>
+            <tr><td><strong>First year</strong></td><td>×1.35</td><td>Adoption or purchase fees, setup supplies, spay/neuter, puppy vaccine series, initial training.</td></tr>
+            <tr><td><strong>Senior</strong> (age ≥ breed senior age)</td><td>healthcare slice ×1.5</td><td>Twice-yearly exams, senior bloodwork, dental cleanings, chronic medications (e.g., arthritis management).</td></tr>
+            <tr><td><strong>Region</strong></td><td>Northeast ×1.15 · West ×1.12 · South ×1.00 · Midwest ×0.95 · Rural ×0.90</td><td>Our estimates of cost-of-living differences in vet fees and services. Directionally grounded in regional price data; treat as approximations.</td></tr>
+            <tr><td><strong>Care level</strong></td><td>Essential ×0.85 · Standard ×1.00 · Premium ×1.35</td><td>Budget basics vs. typical owner vs. top-tier everything (premium food, daycare, professional grooming).</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Lifetime cost</h3>
+      <p><strong>Lifetime = first-year cost + annual cost × (breed lifespan midpoint − 1).</strong> Lifespan comes from our breed dataset (e.g., Labrador Retriever 10–12 → 11 years). The model uses the current annual figure for all years — a simplification, since senior years are pricier; the senior multiplier partially offsets this when the entered age is senior.</p>
+      <h3>Rounding and emergency fund</h3>
+      <p>All money figures round to the nearest $10 — false precision helps nobody. Emergency-fund targets are <strong>$2,000 (small), $3,000 (medium), $5,000 (large and giant)</strong>, sized to cover a typical single emergency (e.g., cruciate surgery) without debt.</p>
+
+      <h2>Breed data</h2>
+      <p>Our dataset covers 24 popular breeds plus Mixed Breed, each with size class, typical weight and lifespan ranges, a breed-specific senior age, an acquisition-cost range (shelter adoption to reputable breeder), and common health issues. Figures are compiled from AKC breed profiles, veterinary references, and market observation of breeder pricing. They're representative, not exhaustive — individual lines and regions vary.</p>
+
+      <h2>The age formula</h2>
+      <p>Our <a href="../dog-age-calculator/">dog age calculator</a> uses the formula from Wang et al. (2019), UC San Diego, published in <em>Cell Systems</em>: researchers compared DNA-methylation "epigenetic clocks" in 104 Labrador Retrievers against humans and derived <strong>human-equivalent years ≈ 16 × ln(dog years) + 31</strong>.</p>
+      <p>Because the study used Labradors, we adjust for size class: <strong>small ×0.92, medium ×1.0, large ×1.06, giant ×1.12</strong> — our own adjustments reflecting the well-established pattern that small dogs age more slowly than large ones. Dog ages below 0.1 years are clamped (the logarithm breaks near zero), and results are rounded to whole years.</p>
+      <p><strong>Limitations:</strong> it's a single-breed study generalized with heuristic size factors. Breed, weight history, and health all shift real aging. Treat the output as a good approximation, not a biological fact.</p>
+
+      <h2>What the estimates can't do</h2>
+      <ul>
+        <li>They can't predict <strong>your</strong> vet's prices, your dog's health luck, or a $7,000 emergency in year three. They're planning guides, not quotes.</li>
+        <li>They assume a <strong>healthy</strong> dog. Chronic conditions (diabetes, severe allergies, cancer) sit outside the model — the emergency fund and insurance exist for exactly this reason.</li>
+        <li>Regional multipliers are <strong>estimates</strong>, not measured price indices. Manhattan and rural Mississippi differ by more than 15%; use the calculator's region as a starting point.</li>
+      </ul>
+
+      <div class="disclaimer-box"><strong>Disclaimers:</strong> PawBudget content is for education and planning only. Cost estimates are not financial advice. Health guides are not veterinary advice — always consult your own veterinarian for diagnosis and treatment. Product links may earn us a commission at no cost to you.</div>
+
+      <div class="cta-band">
+        <h2>Put the model to work</h2>
+        <p>Run your own dog through both calculators.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="../dog-cost-calculator/">Dog cost calculator</a>
+          <a class="btn btn-outline-light" href="../dog-age-calculator/">Dog age calculator</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 13.2c-2.6 0-5.5 2.1-5.5 4.4 0 1.4 1 2.4 2.5 2.4 1 0 1.9-.5 3-.5s2 .5 3 .5c1.5 0 2.5-1 2.5-2.4 0-2.3-2.9-4.4-5.5-4.4zM6.2 8.2c-1-.3-2.2.9-2.6 2.5-.4 1.7.1 3.2 1.1 3.5 1 .3 2.2-.9 2.6-2.5.4-1.7-.1-3.2-1.1-3.5zm11.6 0c-1 .3-1.5 1.8-1.1 3.5.4 1.6 1.6 2.8 2.6 2.5 1-.3 1.5-1.8 1.1-3.5-.4-1.6-1.6-2.8-2.6-2.5zM9.4 3.1c-1.1.2-1.7 1.9-1.4 3.7.3 1.8 1.4 3.1 2.5 2.9 1.1-.2 1.7-1.9 1.4-3.7-.3-1.8-1.4-3.1-2.5-2.9zm5.2 0c-1.1-.2-2.2 1.1-2.5 2.9-.3 1.8.3 3.5 1.4 3.7 1.1.2 2.2-1.1 2.5-2.9.3-1.8-.3-3.5-1.4-3.7z"/></svg>
+          PawBudget
+        </div>
+        <p>Honest cost estimates and senior-care guides for dog owners. Estimates only — not financial or veterinary advice.</p>
+      </div>
+      <div>
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="../dog-cost-calculator/">Dog Cost Calculator</a></li>
+          <li><a href="../dog-age-calculator/">Dog Age Calculator</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Guides</h4>
+        <ul>
+          <li><a href="../senior-dog-care/">Senior Dog Care</a></li>
+          <li><a href="../senior-dog-care/arthritis/">Arthritis in Dogs</a></li>
+          <li><a href="../best-senior-dog-food/">Best Senior Dog Food</a></li>
+          <li><a href="../when-is-my-dog-considered-senior/">When Is My Dog a Senior?</a></li>
+          <li><a href="../dog-cost/labrador-retriever/">Labrador Retriever Costs</a></li>
+          <li><a href="../dog-cost/golden-retriever/">Golden Retriever Costs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="../about/">About</a></li>
+          <li><a href="./">Methodology</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 PawBudget. All rights reserved.</span>
+      <span>Some links are affiliate links; we may earn a commission at no cost to you.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
